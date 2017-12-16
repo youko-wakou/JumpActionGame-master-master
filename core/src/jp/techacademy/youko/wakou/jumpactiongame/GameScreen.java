@@ -1,6 +1,7 @@
 package jp.techacademy.youko.wakou.jumpactiongame;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -56,6 +57,7 @@ public class GameScreen extends ScreenAdapter  {
     BitmapFont mFont;
     int mScore;
     int mHighScore;
+    Preferences mPrefs;
 
     public GameScreen(JumpActionGame game){
         mGame = game;
@@ -85,7 +87,9 @@ public class GameScreen extends ScreenAdapter  {
 
         mFont.getData().setScale(0.8f);
         mScore = 0;
-        mHighScore = 0;
+
+        mPrefs = Gdx.app.getPreferences("jp.techacademy.youko.wakou.jumpactiongame");
+        mHighScore = mPrefs.getInteger("HIGHSCORE",0);
 
         createStage();
     }
@@ -214,12 +218,15 @@ public class GameScreen extends ScreenAdapter  {
 
     }
     private void updateGameOver(){
+        if(Gdx.input.justTouched()){
+            mGame.setScreen(new ResultScreen(mGame,mScore));
+        }
 
     }
 
     private void checkCollision(){
         if (mPlayer.getBoundingRectangle().overlaps(mUfo.getBoundingRectangle())){
-            Gdx.app.log("JampActionGame","CLEAR");
+//            Gdx.app.log("JampActionGame","CLEAR");
             mGameState = GAME_STATE_GAMEOVER;
             return;
         }
@@ -235,6 +242,9 @@ public class GameScreen extends ScreenAdapter  {
                 mScore++;
                 if(mScore > mHighScore){
                     mHighScore = mScore;
+
+                    mPrefs.putInteger("HIGHSCORE",mHighScore);
+                    mPrefs.flush();
                 }
                 break;
             }
