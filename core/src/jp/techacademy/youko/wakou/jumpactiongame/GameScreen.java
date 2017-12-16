@@ -120,6 +120,7 @@ public class GameScreen extends ScreenAdapter  {
 
         mGuiCamera.update();
         mGame.batch.setProjectionMatrix(mGuiCamera.combined);
+        mGame.batch.begin();
         mFont.draw(mGame.batch, "HighScore: " + mHighScore, 16, GUI_HEIGHT - 15);
         mFont.draw(mGame.batch,"Score:"+mScore,16,GUI_HEIGHT-35);
 
