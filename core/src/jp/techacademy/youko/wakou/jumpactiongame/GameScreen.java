@@ -120,7 +120,7 @@ public class GameScreen extends ScreenAdapter  {
 
         mGuiCamera.update();
         mGame.batch.setProjectionMatrix(mGuiCamera.combined);
-        mFont.draw(mGame.batch,"HighScore:"+mHighScore,16,GUI_HEIGHT-15);
+        mFont.draw(mGame.batch, "HighScore: " + mHighScore, 16, GUI_HEIGHT - 15);
         mFont.draw(mGame.batch,"Score:"+mScore,16,GUI_HEIGHT-35);
 
         mGame.batch.end();
@@ -218,7 +218,7 @@ public class GameScreen extends ScreenAdapter  {
 
     private void checkCollision(){
         if (mPlayer.getBoundingRectangle().overlaps(mUfo.getBoundingRectangle())){
-            Gdx.app.log("JamActionGame","CLEAR");
+            Gdx.app.log("JampActionGame","CLEAR");
             mGameState = GAME_STATE_GAMEOVER;
             return;
         }
