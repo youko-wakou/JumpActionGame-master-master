@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class Enemy extends GameObject {
 
-    public static final float ENEMY_WIDTH = 0.3f;
-    public static final float ENEMY_HEIGHT = 0.3f;
+    public static final float ENEMY_WIDTH = 1f;
+    public static final float ENEMY_HEIGHT = 1f;
     //    敵キャラが落ちる
     public static final int ENEMY_STATE_FALL = 1;
 //    敵キャラがプレイヤーとぶつかる

@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import sun.rmi.runtime.Log;
+
 /**
  * Created by appu2 on 2017/12/14.
  */
@@ -175,7 +177,7 @@ public class GameScreen extends ScreenAdapter  {
         mPlayer.setPosition(WORLD_WIDTH / 2 - mPlayer.getWidth() / 2, Step.STEP_HEIGHT);
 
         mEnemy = new Enemy(enemyTexture,0,0,72,72);
-        mEnemy.setPosition(WORLD_WIDTH/2 - mEnemy.getWidth()/2,Step.STEP_HEIGHT);
+        mEnemy.setPosition(WORLD_WIDTH * mRandom.nextFloat(),WORLD_HEIGHT * mRandom.nextFloat());
         mUfo = new Ufo(ufoTexture,0,0,120,74);
         mUfo.setPosition(WORLD_WIDTH/2 - Ufo.UFO_WIDTH/2,y);
     }
@@ -216,7 +218,10 @@ public class GameScreen extends ScreenAdapter  {
         for(int i = 0; i < mSteps.size(); i ++){
             mSteps.get(i).update(delta);
         }
-        if(mEnemy.getY()<= mEnemy.ENEMY_HEIGHT/2){
+        if(mRandom.nextFloat() >= 0){
+            String rand;
+            rand = String.valueOf(mRandom.nextFloat());
+            Log.d("test",rand);
             mEnemy.slide();
         }
         if(mPlayer.getY() <= mPlayer.PLAYER_HEIGHT/2){
