@@ -170,7 +170,7 @@ public class GameScreen extends ScreenAdapter  {
         mPlayer.setPosition(WORLD_WIDTH / 2 - mPlayer.getWidth() / 2, Step.STEP_HEIGHT);
 
         mEnemy = new Enemy(enemyTexture,0,0,70,70);
-        mEnemy.setPosition(WORLD_WIDTH/2 - mEnemy.getWidth()/2,mPlayer.getHeight());
+        mEnemy.setPosition(WORLD_WIDTH/2 - mEnemy.getWidth()/2,Step.STEP_HEIGHT);
         mUfo = new Ufo(ufoTexture,0,0,120,74);
         mUfo.setPosition(WORLD_WIDTH/2 - Ufo.UFO_WIDTH/2,y);
     }
