@@ -121,6 +121,7 @@ public class GameScreen extends ScreenAdapter  {
 
         mUfo.draw(mGame.batch);
         mPlayer.draw(mGame.batch);
+        //Enemyを画面に描写
         mEnemy.draw(mGame.batch);
         mGame.batch.end();
 
