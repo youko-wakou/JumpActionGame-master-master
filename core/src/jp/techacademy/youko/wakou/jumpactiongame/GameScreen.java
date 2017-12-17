@@ -3,14 +3,15 @@ package jp.techacademy.youko.wakou.jumpactiongame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class GameScreen extends ScreenAdapter  {
 
     private JumpActionGame mGame;
 
+    Sound sound;
     Sprite mBg;
     OrthographicCamera mCamera;
     OrthographicCamera mGuiCamera;
@@ -61,6 +63,8 @@ public class GameScreen extends ScreenAdapter  {
     Preferences mPrefs;
 
     public GameScreen(JumpActionGame game){
+//        sound
+        sound = Gdx.audio.newSound(Gdx.files.internal("sound.mp3"));
         mGame = game;
 
         Texture bgTexture = new Texture("back.png");
@@ -170,7 +174,7 @@ public class GameScreen extends ScreenAdapter  {
         mPlayer = new Player(playerTexture, 0, 0, 72, 72);
         mPlayer.setPosition(WORLD_WIDTH / 2 - mPlayer.getWidth() / 2, Step.STEP_HEIGHT);
 
-        mEnemy = new Enemy(enemyTexture,0,0,70,70);
+        mEnemy = new Enemy(enemyTexture,0,0,72,72);
         mEnemy.setPosition(WORLD_WIDTH/2 - mEnemy.getWidth()/2,Step.STEP_HEIGHT);
         mUfo = new Ufo(ufoTexture,0,0,120,74);
         mUfo.setPosition(WORLD_WIDTH/2 - Ufo.UFO_WIDTH/2,y);
@@ -217,6 +221,7 @@ public class GameScreen extends ScreenAdapter  {
                 mPlayer.hitStep();
         }
         mPlayer.update(delta,accel);
+        mEnemy.update(delta,accel);
         mHeightSoFar = Math.max(mPlayer.getY(),mHeightSoFar);
 
         checkCollision();
