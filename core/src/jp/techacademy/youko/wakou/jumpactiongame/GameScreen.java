@@ -50,6 +50,7 @@ public class GameScreen extends ScreenAdapter  {
     List<Star> mStars;
     Ufo mUfo;
     Player mPlayer;
+    Enemy mEnemy;
 
     float mHeightSoFar;
     int mGameState;
@@ -120,6 +121,7 @@ public class GameScreen extends ScreenAdapter  {
 
         mUfo.draw(mGame.batch);
         mPlayer.draw(mGame.batch);
+        mEnemy.draw(mGame.batch);
         mGame.batch.end();
 
         mGuiCamera.update();
@@ -141,6 +143,7 @@ public class GameScreen extends ScreenAdapter  {
         Texture stepTexture = new Texture("step.png");
         Texture starTexture = new Texture("star.png");
         Texture playerTexture = new Texture("uma.png");
+        Texture enemyTexture = new Texture("enemy.png");
         Texture ufoTexture = new Texture("ufo.png");
 
         float y = 0;
@@ -166,6 +169,8 @@ public class GameScreen extends ScreenAdapter  {
         mPlayer = new Player(playerTexture, 0, 0, 72, 72);
         mPlayer.setPosition(WORLD_WIDTH / 2 - mPlayer.getWidth() / 2, Step.STEP_HEIGHT);
 
+        mEnemy = new Enemy(enemyTexture,0,0,70,70);
+        mEnemy.setPosition(WORLD_WIDTH/2 - mEnemy.getWidth()/2,mPlayer.getHeight());
         mUfo = new Ufo(ufoTexture,0,0,120,74);
         mUfo.setPosition(WORLD_WIDTH/2 - Ufo.UFO_WIDTH/2,y);
     }
