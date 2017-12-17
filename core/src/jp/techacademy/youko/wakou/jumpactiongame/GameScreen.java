@@ -216,7 +216,9 @@ public class GameScreen extends ScreenAdapter  {
         for(int i = 0; i < mSteps.size(); i ++){
             mSteps.get(i).update(delta);
         }
-
+        if(mEnemy.getY()<= mEnemy.ENEMY_HEIGHT/2){
+            mEnemy.slide();
+        }
         if(mPlayer.getY() <= mPlayer.PLAYER_HEIGHT/2){
                 mPlayer.hitStep();
         }

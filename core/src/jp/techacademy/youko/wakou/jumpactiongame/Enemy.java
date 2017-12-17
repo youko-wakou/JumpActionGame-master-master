@@ -39,6 +39,10 @@ public class Enemy extends GameObject {
         }
 
     }
+    public void slide(){
+        velocity.y = ENEMY_MOVE_VELOCITY;
+        mState = ENEMY_STATE_FALL;
+    }
 //    敵キャラにぶつかったとき
     public void danger(){
         mState = ENEMY_NONE;
