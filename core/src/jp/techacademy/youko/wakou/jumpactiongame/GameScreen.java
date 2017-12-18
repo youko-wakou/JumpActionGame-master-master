@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import sun.rmi.runtime.Log;
-
 /**
  * Created by appu2 on 2017/12/14.
  */
@@ -221,7 +219,7 @@ public class GameScreen extends ScreenAdapter  {
         if(mRandom.nextFloat() >= 0){
             String rand;
             rand = String.valueOf(mRandom.nextFloat());
-            Log.d("test",rand);
+//            Log.d("test",rand);
             mEnemy.slide();
         }
         if(mPlayer.getY() <= mPlayer.PLAYER_HEIGHT/2){
@@ -243,6 +241,7 @@ public class GameScreen extends ScreenAdapter  {
     }
 
     private void checkCollision(){
+
         if (mPlayer.getBoundingRectangle().overlaps(mUfo.getBoundingRectangle())){
 //            Gdx.app.log("JampActionGame","CLEAR");
             mGameState = GAME_STATE_GAMEOVER;
@@ -266,6 +265,12 @@ public class GameScreen extends ScreenAdapter  {
                 }
                 break;
             }
+        }
+//        敵キャラとぶつかる
+        if(mPlayer.getBoundingRectangle().overlaps(mEnemy.getBoundingRectangle())){
+            mEnemy.danger();
+            sound.play(1.0f);
+            mGameState = GAME_STATE_GAMEOVER;
         }
         if(mPlayer.velocity.y >0){
             return;
