@@ -169,18 +169,18 @@ public class GameScreen extends ScreenAdapter  {
                 star.setPosition(step.getX()+ mRandom.nextFloat(),step.getY() + Star.STAR_HEIGHT + mRandom.nextFloat() * 3);
                 mStars.add(star);
             }
-            y += (maxJumpHeight - 0.5f);
+            y += (maxJumpHeight - 0.5f);if(mRandom.nextFloat() > 0.3f){
+                Enemy enemy = new Enemy(enemyTexture,0,0,72,72);
+                enemy.setPosition(WORLD_WIDTH * mRandom.nextFloat(),WORLD_HEIGHT * mRandom.nextFloat());
+                mEnemy.add(enemy);
+
+            }
             y -= mRandom.nextFloat() * (maxJumpHeight/3);
         }
 
         mPlayer = new Player(playerTexture, 0, 0, 72, 72);
         mPlayer.setPosition(WORLD_WIDTH / 2 - mPlayer.getWidth() / 2, Step.STEP_HEIGHT);
-        if(mRandom.nextFloat() > 0.3f){
-            Enemy enemy = new Enemy(enemyTexture,0,0,72,72);
-           enemy.setPosition(WORLD_WIDTH * mRandom.nextFloat(),WORLD_HEIGHT * mRandom.nextFloat());
-           mEnemy.add(enemy);
 
-        }
         mUfo = new Ufo(ufoTexture,0,0,120,74);
         mUfo.setPosition(WORLD_WIDTH/2 - Ufo.UFO_WIDTH/2,y);
     }
