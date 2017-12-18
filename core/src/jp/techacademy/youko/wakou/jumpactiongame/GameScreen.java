@@ -278,7 +278,7 @@ public class GameScreen extends ScreenAdapter  {
                 continue;
             }
             if(mPlayer.getBoundingRectangle().overlaps(enemy.getBoundingRectangle())){
-                enemy.danger();
+                enemy.get();
                 sound.play(1.0f);
                 mGameState = GAME_STATE_GAMEOVER;
                 break;
