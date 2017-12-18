@@ -52,7 +52,7 @@ public class GameScreen extends ScreenAdapter  {
     List<Star> mStars;
     Ufo mUfo;
     Player mPlayer;
-    Enemy mEnemy;
+    List<Enemy> mEnemy;
 
     float mHeightSoFar;
     int mGameState;
@@ -84,6 +84,7 @@ public class GameScreen extends ScreenAdapter  {
         mRandom = new Random();
         mSteps = new ArrayList<Step>();
         mStars = new ArrayList<Star>();
+        mEnemy = new ArrayList<Enemy>();
         mGameState = GAME_STATE_READY;
         mTouchPoint = new Vector3();
 
@@ -122,12 +123,13 @@ public class GameScreen extends ScreenAdapter  {
         for(int i = 0; i < mStars.size();i++){
             mStars.get(i).draw(mGame.batch);
         }
+        for(int i = 0; i< mEnemy.size();i++){
+            mEnemy.get(i).draw(mGame.batch);
+        }
 
         mUfo.draw(mGame.batch);
         mPlayer.draw(mGame.batch);
-        //Enemyを画面に描写
-        mEnemy.draw(mGame.batch);
-        mGame.batch.end();
+       mGame.batch.end();
 
         mGuiCamera.update();
         mGame.batch.setProjectionMatrix(mGuiCamera.combined);
@@ -173,9 +175,12 @@ public class GameScreen extends ScreenAdapter  {
 
         mPlayer = new Player(playerTexture, 0, 0, 72, 72);
         mPlayer.setPosition(WORLD_WIDTH / 2 - mPlayer.getWidth() / 2, Step.STEP_HEIGHT);
+        if(mRandom.nextFloat() > 0.3f){
+            Enemy enemy = new Enemy(enemyTexture,0,0,72,72);
+           enemy.setPosition(WORLD_WIDTH * mRandom.nextFloat(),WORLD_HEIGHT * mRandom.nextFloat());
+           mEnemy.add(enemy);
 
-        mEnemy = new Enemy(enemyTexture,0,0,72,72);
-        mEnemy.setPosition(WORLD_WIDTH * mRandom.nextFloat(),WORLD_HEIGHT * mRandom.nextFloat());
+        }
         mUfo = new Ufo(ufoTexture,0,0,120,74);
         mUfo.setPosition(WORLD_WIDTH/2 - Ufo.UFO_WIDTH/2,y);
     }
@@ -216,17 +221,17 @@ public class GameScreen extends ScreenAdapter  {
         for(int i = 0; i < mSteps.size(); i ++){
             mSteps.get(i).update(delta);
         }
-        if(mRandom.nextFloat() >= 0){
-            String rand;
-            rand = String.valueOf(mRandom.nextFloat());
-//            Log.d("test",rand);
-            mEnemy.slide();
-        }
+//        if(mRandom.nextFloat() >= 0){
+//            String rand;
+//            rand = String.valueOf(mRandom.nextFloat());
+////            Log.d("test",rand);
+//            mEnemy.slide();
+//        }
         if(mPlayer.getY() <= mPlayer.PLAYER_HEIGHT/2){
                 mPlayer.hitStep();
         }
         mPlayer.update(delta,accel);
-        mEnemy.update(delta,accel);
+//        mEnemy.update(delta,accel);
         mHeightSoFar = Math.max(mPlayer.getY(),mHeightSoFar);
 
         checkCollision();
@@ -267,11 +272,23 @@ public class GameScreen extends ScreenAdapter  {
             }
         }
 //        敵キャラとぶつかる
-        if(mPlayer.getBoundingRectangle().overlaps(mEnemy.getBoundingRectangle())){
-            mEnemy.danger();
-            sound.play(1.0f);
-            mGameState = GAME_STATE_GAMEOVER;
+        for(int i = 0; i< mEnemy.size();i++){
+            Enemy enemy = mEnemy.get(i);
+            if(enemy.mState == Enemy.ENEMY_NONE){
+                continue;
+            }
+            if(mPlayer.getBoundingRectangle().overlaps(enemy.getBoundingRectangle())){
+                enemy.danger();
+                sound.play(1.0f);
+                mGameState = GAME_STATE_GAMEOVER;
+                break;
+            }
         }
+//        if(mPlayer.getBoundingRectangle().overlaps(mEnemy.getBoundingRectangle())){
+//            mEnemy.danger();
+//            sound.play(1.0f);
+//            mGameState = GAME_STATE_GAMEOVER;
+//        }
         if(mPlayer.velocity.y >0){
             return;
         }
